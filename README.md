@@ -15,7 +15,7 @@ In the gif above the threshold range is set to [200, 1000] and the depth is set 
 
 Below is a live demo of the threshold brush tool, feel free to try it out.
 
-[LIVE DEMONSTRATION](https://ibrahimcsae.github.io/cornerstonetools-thresholdbrush/)
+[LIVE DEMONSTRATION](https://ibrahimcsae.github.io/cornerstonetools-rectangle-roi-threshold-segmentation/)
 
 It is not recommended to do over 300 slices at once, as it might cause slight stuttering, but it is still possible. 
 I recommend staying within the range of 50-150 slices at once, depending on your computer specs.
