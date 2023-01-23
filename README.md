@@ -1,4 +1,4 @@
-# cornerstonetools-thresholdbrush
+# cornerstonetools-rectangle-roi-threshold-segmentation
 
 A tool that draws pixels inside ROI rectangle that are within the specified min and max threshold values, It is also able to segment multiple slices at the same time, by specifying the depth, ex 10 slices.<br>
 
