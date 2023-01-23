@@ -1,10 +1,10 @@
 # cornerstonetools-rectangle-roi-threshold-segmentation
 
-A tool that draws pixels inside ROI rectangle that are within the specified min and max threshold values, It is also able to segment multiple slices at the same time, by specifying the depth, ex 10 slices.<br>
+This tool allows you to segment pixels within an ROI rectangle by specifying a minimum and maximum threshold value. Additionally, it can segment multiple slices at once by specifying the depth, such as 10 slices.<br>
 
 ![demogif2](https://user-images.githubusercontent.com/93064150/214147658-521e31d0-c6b7-4d35-87dd-bb71277dfd19.gif)
 
-In the gif above the threshold range is set to [200, 1000] and the depth is set to 10 slices, you can see that the tool is able to segment multiple slices at the same time, while respecting the threshold range.
+The above gif demonstrates the threshold range being set to [200, 1000] and the depth set to 10 slices, showcasing the tool's ability to segment multiple slices while respecting the threshold range.
 
 
 ## Dependencies 
@@ -13,12 +13,11 @@ In the gif above the threshold range is set to [200, 1000] and the depth is set 
 * [cornerstone-tools](https://github.com/cornerstonejs/cornerstoneTools)
 
 
-Below is a live demo of the threshold brush tool, feel free to try it out.
+A live demo of the threshold brush tool is available for trying out.
 
 [LIVE DEMONSTRATION](https://ibrahimcsae.github.io/cornerstonetools-rectangle-roi-threshold-segmentation/)
 
-It is not recommended to do over 300 slices at once, as it might cause slight stuttering, but it is still possible. 
-I recommend staying within the range of 50-150 slices at once, depending on your computer specs.
+While it is possible to segment over 300 slices at once, it is recommended to stay within the range of 50-150 slices, depending on your computer's specs.
 
 ## Installation
 
@@ -26,7 +25,7 @@ I recommend staying within the range of 50-150 slices at once, depending on your
 $ npm i cornerstonetools-thresholdbrush
 ```
 
-## Example
+## Usage
 
 
 ```js
@@ -37,7 +36,7 @@ cornerstoneTools.setToolActive("RectangleROIThresholdSegmentation", { mouseButto
 
 ```
 
-You can modify the threshold low an threshold high configuration on the fly like the following
+The threshold values, number of slices, and whether the segmentation is filled inside or outside the ROI rectangle can be modified on the fly.
 
 ```js
 
@@ -45,26 +44,12 @@ let brushThreshold = cornerstoneTools.store.state.tools.filter(tool => tool.name
 brushThreshold.thresholdLow = -29
 brushThreshold.thresholdHigh = 150
 
-```
-
-You can also modify the amount of slices like the following
-
-```js
-
-let brushThreshold = cornerstoneTools.store.state.tools.filter(tool => tool.name == 'RectangleROIThresholdSegmentation')[0].configuration
 brushThreshold.numberOfSlices = 10
-
-```
-
-You can also modify the wether the segmentation is filled inside or outside the roi rectangle like the following
-
-```js
-
-let brushThreshold = cornerstoneTools.store.state.tools.filter(tool => tool.name == 'RectangleROIThresholdSegmentation')[0].configuration
 brushThreshold.inside = true
 
 ```
-## Common thresholds to get you started
+
+## Common thresholds
 
 Left Psoas : [-29, 150]<br>
 Right Psoas : [-29, 150]<br>
