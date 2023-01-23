@@ -1,6 +1,6 @@
 {
   "name": "cornerstonetools-rectangle-roi-threshold-segmentation",
-  "version": "1.0.0",
+  "version": "1.4.0",
   "description": "3D Threshold segmentation tool that allows you to segment several slices at once using a rectangle ROI",
   "main": "dist/index.js",
   "dependencies": {
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/IbrahimCSAE/cornerstonetools-thresholdbrush.git"
+    "url": "git+https://github.com/IbrahimCSAE/cornerstonetools-rectangle-roi-threshold-segmentation.git"
   },
   "keywords": [
     "cornerstonetools",
@@ -32,14 +32,21 @@
     "medical",
     "dicom",
     "dicomweb",
-    "series"
+    "series",
+    "image",
+    "threshold",
+    "segmentation",
+    "roi",
+    "rectangle",
+    "medical",
+    "imaging"
   ],
   "author": "Ibrahim Mohamed <ibrahim.mdev@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/IbrahimCSAE/cornerstonetools-thresholdbrush/issues"
+    "url": "https://github.com/IbrahimCSAE/cornerstonetools-rectangle-roi-threshold-segmentation/issues"
   },
-  "homepage": "https://github.com/IbrahimCSAE/cornerstonetools-thresholdbrush#readme",
+  "homepage": "https://github.com/IbrahimCSAE/cornerstonetools-rectangle-roi-threshold-segmentation#readme",
   "files": [
     "dist/index.js"
   ]

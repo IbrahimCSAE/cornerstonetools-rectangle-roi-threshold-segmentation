@@ -2,4 +2,4 @@
 import RectangleROIThresholdSegmentation from "./RectangleROIThresholdSegmentation";
 
 
-export { RectangleROIThresholdSegmentation };
+export default RectangleROIThresholdSegmentation;

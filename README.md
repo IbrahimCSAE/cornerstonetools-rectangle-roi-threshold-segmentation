@@ -28,11 +28,12 @@ $ npm i cornerstonetools-thresholdbrush
 
 ## Example
 
-```js
-import ThresholdBrush from "cornerstonetools-thresholdbrush";
 
-cornerstoneTools.addToolForElement(element, ThresholdBrush, {configuration: {thresholdLow: 200 , thresholdHigh: 1000}});
-cornerstoneTools.setToolActive("ThresholdBrush", { mouseButtonMask: 1 });
+```js
+import RectangleROIThresholdSegmentation from "cornerstonetools-rectangle-roi-threshold-segmentation";
+
+cornerstoneTools.addToolForElement(element, RectangleROIThresholdSegmentation, {configuration: {thresholdLow: 200 , thresholdHigh: 1000, numberOfSlices: 10, inside: true}});
+cornerstoneTools.setToolActive("RectangleROIThresholdSegmentation", { mouseButtonMask: 1 });
 
 ```
 
@@ -40,9 +41,27 @@ You can modify the threshold low an threshold high configuration on the fly like
 
 ```js
 
-let brushThreshold = cornerstoneTools.store.state.tools.filter(tool => tool.name == 'ThresholdBrush')[0].configuration
+let brushThreshold = cornerstoneTools.store.state.tools.filter(tool => tool.name == 'RectangleROIThresholdSegmentation')[0].configuration
 brushThreshold.thresholdLow = -29
 brushThreshold.thresholdHigh = 150
+
+```
+
+You can also modify the amount of slices like the following
+
+```js
+
+let brushThreshold = cornerstoneTools.store.state.tools.filter(tool => tool.name == 'RectangleROIThresholdSegmentation')[0].configuration
+brushThreshold.numberOfSlices = 10
+
+```
+
+You can also modify the wether the segmentation is filled inside or outside the roi rectangle like the following
+
+```js
+
+let brushThreshold = cornerstoneTools.store.state.tools.filter(tool => tool.name == 'RectangleROIThresholdSegmentation')[0].configuration
+brushThreshold.inside = true
 
 ```
 ## Common thresholds to get you started

@@ -79,21 +79,21 @@ const imageIds = [
 
     min.addEventListener("change", (e) => {
       cornerstoneTools.store.state.tools.filter(tool => tool.name == 'RectangleROIThresholdSegmentation')[0].configuration.thresholdLow = e.target.value
-      cornerstone.updateImage(element)
+      cornerstone.updateImage(axial)
     })
 
     max.addEventListener("change", (e) => {
       cornerstoneTools.store.state.tools.filter(tool => tool.name == 'RectangleROIThresholdSegmentation')[0].configuration.thresholdHigh = e.target.value
-      cornerstone.updateImage(element)
+      cornerstone.updateImage(axial)
     })
 
     slices.addEventListener("change", (e) => {
       cornerstoneTools.store.state.tools.filter(tool => tool.name == 'RectangleROIThresholdSegmentation')[0].configuration.numberOfSlices = e.target.value
-      cornerstone.updateImage(element)
+      cornerstone.updateImage(axial)
     })
 
     fill.addEventListener("change", (e) => {
       cornerstoneTools.store.state.tools.filter(tool => tool.name == 'RectangleROIThresholdSegmentation')[0].configuration.inside = e.target.checked
-      cornerstone.updateImage(element)
+      cornerstone.updateImage(axial)
     })
   })()

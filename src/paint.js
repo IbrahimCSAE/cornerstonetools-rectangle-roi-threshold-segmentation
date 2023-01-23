@@ -191,7 +191,7 @@ function getImagesInRange(currentImageIdIndex, imageIds, numberOfSlices) {
     }
     imagesInRange.push({
       imageIdIndex: newIndex,
-      image: cornerstone.imageCache.imageCache[imageIds[newIndex]].image ,
+      image: cornerstone.imageCache.imageCache[imageIds[newIndex]]?.image ,
     });
   }
 
