@@ -2,7 +2,7 @@
 
 A tool that draws pixels inside ROI rectangle that are within the specified min and max threshold values, It is also able to segment multiple slices at the same time, by specifying the depth, ex 10 slices.<br>
 
-![ezgif com-gif-maker](https://user-images.githubusercontent.com/93064150/199975179-66cf6f78-a769-4c45-8bf0-aaab450cb6e1.gif)
+![demogif2](https://user-images.githubusercontent.com/93064150/214147658-521e31d0-c6b7-4d35-87dd-bb71277dfd19.gif)
 
 In the gif above the threshold range is set to [200, 1000] and the depth is set to 10 slices, you can see that the tool is able to segment multiple slices at the same time, while respecting the threshold range.
 
@@ -12,7 +12,6 @@ In the gif above the threshold range is set to [200, 1000] and the depth is set 
 * [cornerstone-core](https://github.com/cornerstonejs/cornerstone)
 * [cornerstone-tools](https://github.com/cornerstonejs/cornerstoneTools)
 
-## Demo
 
 Below is a live demo of the threshold brush tool, feel free to try it out.
 
