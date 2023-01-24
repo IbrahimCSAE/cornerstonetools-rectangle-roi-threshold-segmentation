@@ -150,10 +150,10 @@ function paintWithinThreshold(
         diff: getDiffBetweenPixelData(previousPixeldata, pixelData),
       };
       operationsArray.push(operation);
+      setters.updateSegmentsOnLabelmap2D(labelmap2DForImageIdIndex);
     }
     for (let i = operationsArray.length - 1; i >= 0; i--) {
       setters.pushState(element, [operationsArray[i]]);
-      setters.updateSegmentsOnLabelmap2D(operationsArray[i]);
       triggerEvent(element, cornerstoneTools.EVENTS.LABELMAP_MODIFIED, {
         labelmapIndex: getters.activeLabelmapIndex(element),
       });
@@ -199,11 +199,11 @@ function paintWithinThreshold(
       diff: getDiffBetweenPixelData(previousPixeldata, pixelData),
     };
     operationsArray.push(operation);
+    setters.updateSegmentsOnLabelmap2D(labelmap2DForImageIdIndex);
   }
   // loop over operationsArray and call setters in reverse order
   for (let i = operationsArray.length - 1; i >= 0; i--) {
     setters.pushState(element, [operationsArray[i]]);
-    setters.updateSegmentsOnLabelmap2D(operationsArray[i]);
     triggerEvent(element, cornerstoneTools.EVENTS.LABELMAP_MODIFIED, {
       labelmapIndex: getters.activeLabelmapIndex(element),
     });
