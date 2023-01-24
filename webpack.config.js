@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
   entry: './src/index.js',
-  mode: 'development',
+  mode: 'production',
 	output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
@@ -11,7 +11,7 @@ module.exports = {
       name: 'cornerstonetools-rectangle-roi-threshold-segmentation',
       type: 'umd',
       umdNamedDefine: true,
-      export: 'default',
+      export: 'RectangleROIThresholdSegmentation',
     },
     clean: true,
   },

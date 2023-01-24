@@ -1,6 +1,6 @@
 {
   "name": "cornerstonetools-rectangle-roi-threshold-segmentation",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "description": "3D Threshold segmentation tool that allows you to segment several slices at once using a rectangle ROI",
   "main": "dist/index.js",
   "dependencies": {
