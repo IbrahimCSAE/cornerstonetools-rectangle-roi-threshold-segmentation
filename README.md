@@ -22,7 +22,7 @@ While it is possible to segment over 300 slices at once, it is recommended to st
 ## Installation
 
 ```sh
-$ npm i cornerstonetools-thresholdbrush
+$ npm i "cornerstonetools-rectangle-roi-threshold-segmentation"
 ```
 
 ## Usage
