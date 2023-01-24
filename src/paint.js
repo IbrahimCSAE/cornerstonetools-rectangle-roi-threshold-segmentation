@@ -1,23 +1,22 @@
-
-
 import cornerstoneTools from "cornerstone-tools";
 import cornerstone from "cornerstone-core";
 
-const { getBoundingBoxAroundPolygon, getDiffBetweenPixelData} = cornerstoneTools.import(
-  "util/segmentationUtils"
-);
+const { getBoundingBoxAroundPolygon, getDiffBetweenPixelData } =
+  cornerstoneTools.import("util/segmentationUtils");
 
 const triggerEvent = cornerstoneTools.import("util/triggerEvent");
 
 const getLogger = cornerstoneTools.import("util/getLogger");
 
-const logger = getLogger("util:segmentation:operations:paintWithinThresholdInsideOrOutsideRectangle");
+const logger = getLogger(
+  "util:segmentation:operations:paintWithinThresholdInsideOrOutsideRectangle"
+);
 
 /**
  * FillInsideRectangle - Fill all pixels inside/outside the region defined
  * by the rectangle if they are within the threshold range.
  * @param  {} evt The Cornerstone event.
- * @param {}  operationData An object containing the `points', 'tool configuration' and the `segmentIndex`.                        
+ * @param {}  operationData An object containing the `points', 'tool configuration' and the `segmentIndex`.
  * @returns {null}
  */
 export function paint(evt, operationData) {
@@ -26,8 +25,7 @@ export function paint(evt, operationData) {
   const vertices = points.map((a) => [a.x, a.y]);
   const [topLeft, bottomRight] = getBoundingBoxAroundPolygon(vertices, image);
 
-  paintWithinThreshold(evt,operationData, topLeft,  bottomRight, configuration)
-
+  paintWithinThreshold(evt, operationData, topLeft, bottomRight, configuration);
 }
 
 /**
@@ -48,7 +46,7 @@ function paintWithinThreshold(
   configuration
 ) {
   const element = evt.detail.element;
-  const stackState = cornerstoneTools.getToolState(element, 'stack');
+  const stackState = cornerstoneTools.getToolState(element, "stack");
   const stackData = stackState.data[0];
   const { imageIds, currentImageIdIndex } = stackData;
   const { segmentIndex } = operationData;
@@ -60,17 +58,19 @@ function paintWithinThreshold(
     configuration.numberOfSlices
   );
 
-
   const { width, height } = evt.detail.image;
   const [xMin, yMin] = topLeft;
   const [xMax, yMax] = bottomRight;
 
   if (!configuration.inside) {
+    const operationsArray = [];
     for (let i = 0; i < imagesInRange.length; i++) {
       const { image, imageIdIndex } = imagesInRange[i];
-      if(!image){
-        logger.warn('Image is undefined, it most likely has not been cached yet.');
-        continue
+      if (!image) {
+        logger.warn(
+          "Image is undefined, it most likely has not been cached yet."
+        );
+        continue;
       }
       const activeLabelmapIndex = getters.activeLabelmapIndex(element);
       const labelmap3D = getters.labelmap3D(element, activeLabelmapIndex);
@@ -81,62 +81,93 @@ function paintWithinThreshold(
         image.columns
       );
       const { pixelData } = labelmap2DForImageIdIndex;
-    // Loop until top of bounding box from top of image, color the entire row
-    for (let i = 0; i < width; i++) {
-      for (let j = 0; j < topLeft[1]; j++) {
-        const imagePixelData = image.getPixelData();
-        const pixelIndex = j * width + i;
-        const hounsfieldValue = imagePixelData[pixelIndex] * image.slope + image.intercept;
-        if (hounsfieldValue >= configuration.thresholdLow && hounsfieldValue <= configuration.thresholdHigh) {
-          pixelData[pixelIndex] = segmentIndex;
+      const previousPixeldata = pixelData.slice();
+      // Loop until top of bounding box from top of image, color the entire row
+      for (let i = 0; i < width; i++) {
+        for (let j = 0; j < topLeft[1]; j++) {
+          const imagePixelData = image.getPixelData();
+          const pixelIndex = j * width + i;
+          const hounsfieldValue =
+            imagePixelData[pixelIndex] * image.slope + image.intercept;
+          if (
+            hounsfieldValue >= configuration.thresholdLow &&
+            hounsfieldValue <= configuration.thresholdHigh
+          ) {
+            pixelData[pixelIndex] = segmentIndex;
+          }
         }
       }
-    }
 
-    // Loop within rows of bounding box, to the left of the box
-    for (let i = 0; i < topLeft[0]; i++) {
-      for (let j = topLeft[1]; j < bottomRight[1]; j++) {
-        const imagePixelData = image.getPixelData();
-        const pixelIndex = j * width + i;
-        const hounsfieldValue = imagePixelData[pixelIndex] * image.slope + image.intercept;
-        if (hounsfieldValue >= configuration.thresholdLow && hounsfieldValue <= configuration.thresholdHigh) {
-          pixelData[pixelIndex] = segmentIndex;
+      // Loop within rows of bounding box, to the left of the box
+      for (let i = 0; i < topLeft[0]; i++) {
+        for (let j = topLeft[1]; j < bottomRight[1]; j++) {
+          const imagePixelData = image.getPixelData();
+          const pixelIndex = j * width + i;
+          const hounsfieldValue =
+            imagePixelData[pixelIndex] * image.slope + image.intercept;
+          if (
+            hounsfieldValue >= configuration.thresholdLow &&
+            hounsfieldValue <= configuration.thresholdHigh
+          ) {
+            pixelData[pixelIndex] = segmentIndex;
+          }
         }
       }
-    }
 
-    // Loop within rows of bounding box, to the right of the box
-    for (let i = bottomRight[0]; i < width; i++) {
-      for (let j = topLeft[1]; j < bottomRight[1]; j++) {
-        const imagePixelData = image.getPixelData();
-        const pixelIndex = j * width + i;
-        const hounsfieldValue = imagePixelData[pixelIndex] * image.slope + image.intercept;
-        if (hounsfieldValue >= configuration.thresholdLow && hounsfieldValue <= configuration.thresholdHigh) {
-          pixelData[pixelIndex] = segmentIndex;
+      // Loop within rows of bounding box, to the right of the box
+      for (let i = bottomRight[0]; i < width; i++) {
+        for (let j = topLeft[1]; j < bottomRight[1]; j++) {
+          const imagePixelData = image.getPixelData();
+          const pixelIndex = j * width + i;
+          const hounsfieldValue =
+            imagePixelData[pixelIndex] * image.slope + image.intercept;
+          if (
+            hounsfieldValue >= configuration.thresholdLow &&
+            hounsfieldValue <= configuration.thresholdHigh
+          ) {
+            pixelData[pixelIndex] = segmentIndex;
+          }
         }
       }
-    }
 
-    // Loop from bottom of bounding box until bottom of image, color entire row
-    for (let i = 0; i < width; i++) {
-      for (let j = bottomRight[1]; j < height; j++) {
-        const imagePixelData = image.getPixelData();
-        const pixelIndex = j * width + i;
-        const hounsfieldValue = imagePixelData[pixelIndex] * image.slope + image.intercept;
-        if (hounsfieldValue >= configuration.thresholdLow && hounsfieldValue <= configuration.thresholdHigh) {
-          pixelData[pixelIndex] = segmentIndex;
+      // Loop from bottom of bounding box until bottom of image, color entire row
+      for (let i = 0; i < width; i++) {
+        for (let j = bottomRight[1]; j < height; j++) {
+          const imagePixelData = image.getPixelData();
+          const pixelIndex = j * width + i;
+          const hounsfieldValue =
+            imagePixelData[pixelIndex] * image.slope + image.intercept;
+          if (
+            hounsfieldValue >= configuration.thresholdLow &&
+            hounsfieldValue <= configuration.thresholdHigh
+          ) {
+            pixelData[pixelIndex] = segmentIndex;
+          }
         }
       }
+      const operation = {
+        imageIdIndex: imageIdIndex,
+        diff: getDiffBetweenPixelData(previousPixeldata, pixelData),
+      };
+      operationsArray.push(operation);
     }
-  }
+    for (let i = operationsArray.length - 1; i >= 0; i--) {
+      setters.pushState(element, [operationsArray[i]]);
+      setters.updateSegmentsOnLabelmap2D(operationsArray[i]);
+      triggerEvent(element, cornerstoneTools.EVENTS.LABELMAP_MODIFIED, {
+        labelmapIndex: getters.activeLabelmapIndex(element),
+      });
+    }
     return;
   }
   const operationsArray = [];
   for (let i = 0; i < imagesInRange.length; i++) {
     const { image, imageIdIndex } = imagesInRange[i];
-    if(!image){
-      logger.warn('Image is undefined, it most likely has not been cached yet.');
-      continue
+    if (!image) {
+      logger.warn(
+        "Image is undefined, it most likely has not been cached yet."
+      );
+      continue;
     }
     const activeLabelmapIndex = getters.activeLabelmapIndex(element);
     const labelmap3D = getters.labelmap3D(element, activeLabelmapIndex);
@@ -148,56 +179,50 @@ function paintWithinThreshold(
     );
     const { pixelData } = labelmap2DForImageIdIndex;
     const previousPixeldata = pixelData.slice();
-  for (let x = xMin; x < xMax; x++) {
-    for (let y = yMin; y < yMax; y++) {
+    for (let x = xMin; x < xMax; x++) {
+      for (let y = yMin; y < yMax; y++) {
         const imagePixelData = image.getPixelData();
         const pixelIndex = y * width + x;
-        const hounsfieldValue = imagePixelData[pixelIndex] * image.slope + image.intercept;
+        const hounsfieldValue =
+          imagePixelData[pixelIndex] * image.slope + image.intercept;
         if (
           hounsfieldValue >= configuration.thresholdLow &&
           hounsfieldValue <= configuration.thresholdHigh
         ) {
           pixelData[pixelIndex] = segmentIndex;
         }
+      }
     }
-  }
 
-
-const operation = {
+    const operation = {
       imageIdIndex: imageIdIndex,
-      diff: getDiffBetweenPixelData(previousPixeldata, pixelData)
-  }
-  operationsArray.push(operation);
-
-
- 
+      diff: getDiffBetweenPixelData(previousPixeldata, pixelData),
+    };
+    operationsArray.push(operation);
   }
   // loop over operationsArray and call setters in reverse order
   for (let i = operationsArray.length - 1; i >= 0; i--) {
     setters.pushState(element, [operationsArray[i]]);
+    setters.updateSegmentsOnLabelmap2D(operationsArray[i]);
     triggerEvent(element, cornerstoneTools.EVENTS.LABELMAP_MODIFIED, {
       labelmapIndex: getters.activeLabelmapIndex(element),
     });
-}
+  }
 }
 
 function getImagesInRange(currentImageIdIndex, imageIds, numberOfSlices) {
   const imagesInRange = [];
-  let currentIndex = currentImageIdIndex
+  let currentIndex = currentImageIdIndex;
   for (let i = 0; i < numberOfSlices; i++) {
-    let newIndex = currentIndex + i
+    let newIndex = currentIndex + i;
     if (newIndex >= imageIds.length) {
-      newIndex = newIndex - imageIds.length
+      newIndex = newIndex - imageIds.length;
     }
     imagesInRange.push({
       imageIdIndex: newIndex,
-      image: cornerstone.imageCache.imageCache[imageIds[newIndex]]?.image ,
+      image: cornerstone.imageCache.imageCache[imageIds[newIndex]]?.image,
     });
   }
 
   return imagesInRange;
 }
-
-
-
-
