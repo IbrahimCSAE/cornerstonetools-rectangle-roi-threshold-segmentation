@@ -11,7 +11,7 @@ module.exports = {
       name: 'cornerstonetools-rectangle-roi-threshold-segmentation',
       type: 'umd',
       umdNamedDefine: true,
-      export: 'RectangleROIThresholdSegmentation',
+      export: 'default',
     },
     clean: true,
   },
